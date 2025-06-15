@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
 import { exportToCSV } from '../../utils/export';
 import { useTransactions } from '../../hooks/useTransactions';
+import { Link } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();

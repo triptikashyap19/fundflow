@@ -117,7 +117,7 @@ export const AIPredictions: React.FC<AIPredictionsProps> = ({ transactions }) =>
           </div>
         ) : (
           <div className="space-y-4">
-            {predictions.slice(0, 8).map((prediction, index) => (
+            {predictions.slice(0, 8).map((prediction) => (
               <div
                 key={prediction.category}
                 className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"

@@ -142,8 +142,8 @@ export class FinanceAI {
   // Analyze spending patterns
   analyzeSpendingPatterns() {
     const now = new Date();
-    const lastMonth = subMonths(now, 1);
-    const twoMonthsAgo = subMonths(now, 2);
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
     
     const currentMonthExpenses = this.transactions
       .filter(t => t.type === 'expense' && new Date(t.date) >= startOfMonth(now))
@@ -151,8 +151,8 @@ export class FinanceAI {
     
     const lastMonthExpenses = this.transactions
       .filter(t => t.type === 'expense' && 
-        new Date(t.date) >= startOfMonth(lastMonth) && 
-        new Date(t.date) <= endOfMonth(lastMonth))
+        new Date(t.date) >= startOfMonth(oneMonthAgo) && 
+        new Date(t.date) <= endOfMonth(oneMonthAgo))
       .reduce((sum, t) => sum + t.amount, 0);
     
     const changePercent = lastMonthExpenses > 0 
