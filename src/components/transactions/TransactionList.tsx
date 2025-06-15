@@ -20,11 +20,20 @@ export const TransactionList: React.FC<TransactionListProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'income' | 'expense'>('all');
   const [sortBy, setSortBy] = useState<'date' | 'amount'>('date');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const { deleteTransaction } = useTransactions();
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
-      await deleteTransaction(id);
+      setDeletingId(id);
+      try {
+        const result = await deleteTransaction(id);
+        if (result.error) {
+          alert(result.error);
+        }
+      } finally {
+        setDeletingId(null);
+      }
     }
   };
 
@@ -140,6 +149,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({
                     size="sm"
                     onClick={() => onEdit(transaction)}
                     className="p-2"
+                    disabled={deletingId === transaction.id}
                   >
                     <Edit2 className="h-4 w-4" />
                   </Button>
@@ -148,6 +158,8 @@ export const TransactionList: React.FC<TransactionListProps> = ({
                     size="sm"
                     onClick={() => handleDelete(transaction.id)}
                     className="p-2 text-danger-600 hover:text-danger-700 hover:bg-danger-50 dark:hover:bg-danger-900/20"
+                    disabled={deletingId === transaction.id}
+                    isLoading={deletingId === transaction.id}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

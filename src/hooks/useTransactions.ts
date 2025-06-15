@@ -47,7 +47,7 @@ export const useTransactions = () => {
     if (!user) return { error: 'User not authenticated' };
 
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('transactions')
         .insert({
           user_id: user.id,
@@ -56,11 +56,25 @@ export const useTransactions = () => {
           description: transaction.description || null,
           date: transaction.date,
           type: transaction.type,
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
 
-      await fetchTransactions();
+      // Update local state immediately with the new transaction
+      if (data) {
+        const newTransaction: Transaction = {
+          id: data.id,
+          amount: Number(data.amount),
+          category: data.category,
+          description: data.description || '',
+          date: data.date,
+          type: data.type as 'income' | 'expense',
+        };
+        setTransactions(prev => [newTransaction, ...prev]);
+      }
+
       return { error: null };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to add transaction';
@@ -108,7 +122,9 @@ export const useTransactions = () => {
 
       if (error) throw error;
 
-      await fetchTransactions();
+      // Update local state immediately by removing the deleted transaction
+      setTransactions(prev => prev.filter(transaction => transaction.id !== id));
+      
       return { error: null };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to delete transaction';

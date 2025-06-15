@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { StatsCards } from '../components/dashboard/StatsCards';
@@ -12,17 +12,18 @@ import { useTransactions } from '../hooks/useTransactions';
 export const Dashboard: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | undefined>();
-  const { transactions, isLoading } = useTransactions();
+  const { transactions, isLoading, refetch } = useTransactions();
 
-  const handleEdit = (transaction: Transaction) => {
+  const handleEdit = useCallback((transaction: Transaction) => {
     setEditingTransaction(transaction);
     setIsFormOpen(true);
-  };
+  }, []);
 
-  const handleCloseForm = () => {
+  const handleCloseForm = useCallback(() => {
     setIsFormOpen(false);
     setEditingTransaction(undefined);
-  };
+    refetch(); // Refetch transactions when the form is closed
+  }, [refetch]);
 
   if (isLoading) {
     return (

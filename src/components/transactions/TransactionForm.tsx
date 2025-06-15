@@ -56,8 +56,8 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
       if (result.error) {
         setError(result.error);
       } else {
-        onClose();
         resetForm();
+        onClose();
       }
     } catch (error) {
       setError('An unexpected error occurred');
@@ -76,10 +76,8 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   const handleClose = () => {
+    resetForm();
     onClose();
-    if (!editTransaction) {
-      resetForm();
-    }
   };
 
   return (
