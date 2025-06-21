@@ -2,6 +2,14 @@
 
 A modern, intelligent personal finance tracker built with React, TypeScript, Supabase, and AI-powered predictive analytics. Track your income and expenses with real user authentication and get smart predictions about your future spending patterns.
 
+## 🖼️ Screenshots
+
+  <img src="./FT1.png" width="45%" alt="Hero Section">
+  <img src="./FT2.png" width="45%" alt="Projects Grid">
+
+  <img src="./FT3.png" width="45%" alt="Contact Form">
+
+
 ## 🚀 Features
 
 ### Core Functionality
@@ -141,20 +149,3 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-**Built with ❤️ using React, TypeScript, Supabase, and AI**
-
-*This project showcases modern web development practices, real authentication, database integration, and AI-powered features - perfect for demonstrating full-stack capabilities to potential employers.*
